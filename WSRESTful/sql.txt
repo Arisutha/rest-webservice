@@ -1,0 +1,10 @@
+INSERT INTO `t_personal_detail` (`personal_detail_id`, `address`, `date_of_birth`, `email`, `gender`, `name`, `phone`, `place_of_birth`, `religion`) VALUES (1, 'Jakarta Selatan', '1995-09-09', 'bobo@bobo.com', 'Pria', 'Bobo Raja', '985396539673', 'Manado', 'Kristen');
+INSERT INTO `t_personal_detail` (`personal_detail_id`, `address`, `date_of_birth`, `email`, `gender`, `name`, `phone`, `place_of_birth`, `religion`) VALUES (2, 'Jakarta Utara', '1989-09-10', 'andien@gmail.com', 'Wanita', 'Andien Anjani', '085675849382', 'Surabaya', 'Hindu');
+INSERT INTO `t_personal_detail` (`personal_detail_id`, `address`, `date_of_birth`, `email`, `gender`, `name`, `phone`, `place_of_birth`, `religion`) VALUES (3, 'Jakarta Selatan', '1988-10-24', 'sukro@gmail.com', 'Pria', 'Sukro', '085295685752', 'Palembang', 'Islam');
+INSERT INTO `t_personal_detail` (`personal_detail_id`, `address`, `date_of_birth`, `email`, `gender`, `name`, `phone`, `place_of_birth`, `religion`) VALUES (4, 'Bandung', '1991-11-01', 'pandit@gmail.com', 'Pria', 'Pandit Kuncoro', '081286858483', 'Pontianak', 'Kristen');
+INSERT INTO `t_personal_detail` (`personal_detail_id`, `address`, `date_of_birth`, `email`, `gender`, `name`, `phone`, `place_of_birth`, `religion`) VALUES (5, 'Jakarta Timur', '1992-12-08', 'dina@gmail.com', 'Wanita', 'Dina Andina', '087887654324', 'Papua Barat', 'Kristen');
+INSERT INTO `t_personal_detail` (`personal_detail_id`, `address`, `date_of_birth`, `email`, `gender`, `name`, `phone`, `place_of_birth`, `religion`) VALUES (6, 'Bandung', '1988-09-08', 'andien@gmail.com', 'Wanita', 'Andien', '123456789012', 'Bandung', 'Islam');
+
+INSERT INTO `t_employee` (`id_employee`, `nik`, `personal_detail_id`, `status`) VALUES (1, 'XSIS2535', 5, 'Resign');
+INSERT INTO `t_employee` (`id_employee`, `nik`, `personal_detail_id`, `status`) VALUES (2, 'XSIS2015', 2, 'Active');
+INSERT INTO `t_employee` (`id_employee`, `nik`, `personal_detail_id`, `status`) VALUES (3, 'XSIS2500', 4, 'Active');

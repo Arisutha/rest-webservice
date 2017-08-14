@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Rest-Client</title>
+	<link rel="stylesheet" type="text/css" href="../assets/bootstrap/dist/css/bootstrap.css">
+	<link rel="stylesheet" type="text/css" href="../assets/jquery/dist/jquery-ui.css">
+</head>
+<body>
+Hello World..
+<div id="contoh"></div>
+<div>
+<br/>
+<div class="container">
+<button class="btn btn-primary" type="button" data-toggle="modal" data-target="#myModalInsert">
+	<span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Tambah
+</button>
+<br/><br/>
+	<table class="table table-bordered table-condensed table-hover">
+		<thead>
+			<tr>
+				<th width="3%" class="text-center"><abbr title="ID Emplyee">ID</abbr></th>
+				<th width="10%" class="text-center"><abbr title="Nomor Induk Karyawan">NIK</abbr></th>
+				<th width="20%" class="text-center">Nama</th>
+				<th width="20%" class="text-center">Email</th>
+				<th width="15%" class="text-center">Religion</th>
+				<th width="10%" class="text-center">Action</th>
+			</tr>
+		</thead>
+		<tbody id="table">
+			
+		</tbody>
+	</table>
+</div>
+</div>
+
+<!-- Modal Insert -->
+<div class="modal fade" id="myModalInsert" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Tambah Data</h4>
+      </div>
+      <div class="modal-body">
+      		<div id="alert-error-message-save"></div>     
+        	<form class="form-horizontal" id="myModalForm">
+					<input type="hidden" id="idEmployee" name="idEmployee">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">NIK</label>
+						<div class="col-sm-6">
+							<input type="text" id ="nik" class="form-control" name="nik"></input>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-4 control-label">Status</label>
+						<div class="col-sm-6">
+							<select id ="status" name="status" class="form-control">
+								<option>----</option>
+								<option value="Active">Active</option>
+								<option value="Resign">Resign</option>
+							</select>
+						</div>
+					</div>
+					<hr/>
+					<input type="hidden" id="idPersonalDetail" name="idPersonalDetail">					
+					<div class="form-group">
+						<label class="col-sm-4 control-label">Nama</label>
+						<div class="col-sm-6">
+							<input type="text" id ="name" class="form-control" name="name"></input>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-4 control-label">Date Of Birth</label>
+						<div class="col-sm-6">
+							<input type="text" id="dateOfBirthString" name="dateOfBirthString" class="form-control">
+						</div> 
+					</div>
+					<div class="form-group">
+						<label class="col-sm-4 control-label">Place Of Birth</label>
+						<div class="col-sm-6">
+							<input type="text"  id="placeOfBirth" name="placeOfBirth" class="form-control">
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-4 control-label">Email</label>
+						<div class="col-sm-6">
+							<input id ="email" type="email" name="email" class="form-control">
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-4 control-label">Gender</label>
+						<div class="col-sm-6">
+							<select id ="gender" name="gender" class="form-control">
+								<option>----</option>
+								<option value="Pria">Pria</option>
+								<option value="Wanita">Wanita</option>
+							</select>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-4 control-label">Religion</label>
+						<div class="col-sm-6">
+						<select id = "religion" name="religion" class="form-control">
+							<option>----</option>
+							<option value="Islam">Islam</option>
+							<option value="Kristen">Kristen</option>
+							<option value="Hindu">Hindu</option>
+							<option value="Budha">Budha</option>
+						</select>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-4 control-label">Phone</label>
+						<div class="col-sm-6">
+							<input id ="phone" name="phone" class="form-control">
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-4 control-label">Address</label>
+						<div class="col-sm-6">
+							<textarea id ="address" name="address" class="form-control" cols="40" rows="3"></textarea>
+						</div>
+					</div>
+				</form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" onclick ="saveEmployee()">Tambah</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Update -->
+<div class="modal fade" id="myModalUpdate" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Update Data</h4>
+      </div>
+      <div class="modal-body">   
+      		<div id="alert-error-message-update"></div>  
+        	<form class="form-horizontal">
+					<input type="hidden" id="UidEmployee" name="idEmployee">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">NIK</label>
+						<div class="col-sm-6">
+							<input type="text" id ="Unik" class="form-control" name="nik">
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-4 control-label">Status</label>
+						<div class="col-sm-6">
+							<select id ="Ustatus" name="status" class="form-control">
+								<option>----</option>
+								<option value="Active">Active</option>
+								<option value="Resign">Resign</option>
+							</select>
+						</div>
+					</div>
+					<hr/>
+					<input type="hidden" id="UPersonalDetailId" name="personalDetailId">					
+					<div class="form-group">
+						<label class="col-sm-4 control-label">Nama</label>
+						<div class="col-sm-6">
+							<input type="text" id ="Uname" class="form-control" name="name" disabled=true>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-4 control-label">Date Of Birth</label>
+						<div class="col-sm-6">
+							<input type="text" id="UdateOfBirthString" name="dateOfBirthString" class="form-control" disabled=true>
+						</div> 
+					</div>
+					<div class="form-group">
+						<label class="col-sm-4 control-label">Place Of Birth</label>
+						<div class="col-sm-6">
+							<input type="text"  id="UplaceOfBirth" name="placeOfBirth" class="form-control" disabled=true>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-4 control-label">Email</label>
+						<div class="col-sm-6">
+							<input id ="Uemail" type="email" name="email" class="form-control" disabled=true>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-4 control-label">Gender</label>
+						<div class="col-sm-6">
+							<select id ="Ugender" name="gender" class="form-control" disabled=true>
+								<option>----</option>
+								<option value="Pria">Pria</option>
+								<option value="Wanita">Wanita</option>
+							</select>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-4 control-label">Religion</label>
+						<div class="col-sm-6">
+						<select id = "Ureligion" name="religion" class="form-control" disabled=true>
+							<option>----</option>
+							<option value="Islam">Islam</option>
+							<option value="Kristen">Kristen</option>
+							<option value="Hindu">Hindu</option>
+							<option value="Budha">Budha</option>
+						</select>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-4 control-label">Phone</label>
+						<div class="col-sm-6">
+							<input id ="Uphone" name="phone" class="form-control" disabled=true>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-4 control-label">Address</label>
+						<div class="col-sm-6">
+							<textarea id ="Uaddress" name="address" class="form-control" cols="40" rows="3" disabled=true></textarea>
+						</div>
+					</div>
+				</form>
+      </div>
+      <div class="modal-footer">
+      	<button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+     	<button type="button" class="btn btn-primary" onclick ="updateEmployee()">Update</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript" src="../assets/jquery/dist/jquery.min.js"></script>
+<script type="text/javascript" src="../assets/jquery/dist/jquery-ui.js"></script>
+<script type="text/javascript" src="../assets/bootstrap/dist/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		console.log("Ready !");
+		jQuery("#contoh").html("TEST!!!");
+		dataEmployee();
+
+	});
+	function dataEmployee(){
+		$.ajax({
+			async: false,
+			type: "GET",
+			url: "http://localhost:8086/hr/oauth/token",
+			dataType: "json"
+		}).done(function(msg){
+			console.log(msg);
+			var data = msg.dataEmployee;
+					$(data).each(
+						function (index, element){
+						$('#table').append(
+								'<tr id="employee-row'+element.idEmployee
+								+'"><td class="text-center">'+element.idEmployee
+								+'</td><td class="text-center">'+element.nik
+								+'</td><td>'+element.personalDetail.name
+								+'</td><td>'+element.personalDetail.email
+								+'</td><td class="text-center">'+element.personalDetail.religion
+								+'</td><td class="text-center">'
+								+'<button class="btn btn-default" onclick="formUpdateEmployee(\''+element.idEmployee+'\')" data-toggle="modal" data-target="#myModalUpdate"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></button>'
+								+'<button class="btn btn-default" onclick="deleteEmployee(\''+element.idEmployee+'\')"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>'
+								+'</td></tr>');					
+						}
+
+				);
+		});
+	}
+
+	/*save - cara pertama*/
+	/*function saveEmployee(){
+		$.ajax({
+			type: "POST",
+			url: "http://localhost:8080/hello/personaldetail-employee-save-model-attribute",
+			data: {
+				idEmployee: $("#idEmployee").val(),
+				nik: $("#nik").val(),
+				status: $("#status").val(),
+				idPersonalDetail: $("#idPersonalDetail").val(),
+				name: $("#name").val(),
+				dateOfBirthString: $("#dateOfBirthString").val(),
+				placeOfBirth: $("#placeOfBirth").val(),
+				email: $("#email").val(),
+				gender: $("#gender").val(),
+				religion: $("#religion").val(),
+				phone: $("#phone").val(),
+				address: $("#address").val()
+			}
+
+		}).done(function(msg){
+			console.log(msg);
+			$(msg.data).each(
+				function (index, element){
+						$('#table').append(
+								'<tr><td>'+element.idEmployee
+								+'</td><td>'+element.nik
+								+'</td><td>'+element.personalDetail.name
+								+'</td><td>'+element.personalDetail.email
+								+'</td><td>'+element.personalDetail.religion
+								+'</td></tr>');					
+						}
+				);
+		});
+	}*/
+
+	function saveEmployee(){
+		$.ajax({
+			async: false,
+			type: "POST",
+			url: "http://localhost:8080/hello/personaldetail-employee-save-model-attribute",
+			data: {
+				idEmployee: $("#idEmployee").val(),
+				nik: $("#nik").val(),
+				status: $("#status").val(),
+				idPersonalDetail: $("#idPersonalDetail").val(),
+				name: $("#name").val(),
+				dateOfBirthString: $("#dateOfBirthString").val(),
+				placeOfBirth: $("#placeOfBirth").val(),
+				email: $("#email").val(),
+				gender: $("#gender").val(),
+				religion: $("#religion").val(),
+				phone: $("#phone").val(),
+				address: $("#address").val()
+			}
+		}).done(function(msg){
+			if (msg.isSuccess==true){
+				$('.close').click();
+				$('#myModalForm')[0].reset();
+				$('#myModalInsert').modal('hide');
+				var data = msg.dataEmployee;
+				$('#table').append(
+					$('<tr id="employee-row'+data.idEmployee
+						+'"><td class="text-center">'+data.idEmployee
+						+'</td><td class="text-center">'+data.nik
+						+'</td><td>'+data.personalDetail.name
+						+'</td><td>'+data.personalDetail.email
+						+'</td><td class="text-center">'+data.personalDetail.religion
+						+'</td><td class="text-center">'
+						+'<button class="btn btn-default" onclick="formUpdateEmployee(\''+data.idEmployee+'\')" data-toggle="modal" data-target="#myModalUpdate"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></button>'
+						+'<button class="btn btn-default" onclick="deleteEmployee(\''+data.idEmployee+'\')"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>'
+						+'</td></tr>')
+					);
+			} else {
+				$('#alert-error-message-save').html("<div class='alert alert-danger alert-dismissible' role='alert'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button><strong>Error! "+msg.errorMessage+"</strong></div>");
+			}
+		});
+	}
+
+	function formUpdateEmployee(detailEmployee){
+		$.ajax({
+			async: false,
+			type: "POST",
+			url: "http://localhost:8080/hello/get-employee-personaldetail-model-attribute",
+			data:{
+				idEmployee: detailEmployee
+			}
+		}).done(function(msg){
+			console.log(msg);
+			var data = msg.getEmployee;
+			$(data).each(
+				$('#UidEmployee').val(data.idEmployee),
+				$('#Unik').val(data.nik),
+				$('#Ustatus').val(data.status),
+				$('#UpersonalDetailId').val(data.personalDetailId),
+				$('#Uname').val(data.personalDetail.name),
+				$('#UdateOfBirthString').val(data.personalDetail.dateOfBirth),
+				$('#UplaceOfBirth').val(data.personalDetail.placeOfBirth),
+				$('#Uemail').val(data.personalDetail.email),
+				$('#Ugender').val(data.personalDetail.gender),
+				$('#Ureligion').val(data.personalDetail.religion),
+				$('#Uphone').val(data.personalDetail.phone),
+				$('#Uaddress').val(data.personalDetail.address)
+				)
+		});
+	}
+
+	function updateEmployee(){
+		$.ajax({
+			async: false,
+			type: "POST",
+			url: "http://localhost:8080/hello/update-employee-personaldetail-model-attribute",
+			data:{
+				idEmployee: $("#UidEmployee").val(),
+				nik: $("#Unik").val(),
+				status: $("#Ustatus").val()
+			}
+		}).done(function(msg){
+			console.log(msg);
+			var data = msg.updateList;
+			if(msg.isSuccess==true){
+				$('.close').click();
+				$('#myModalUpdate').modal('hide');
+				$('#employee-row'+data.idEmployee+' td').eq(1).html(data.nik);
+			} else {
+				$('#alert-error-message-update').html("<div class='alert alert-danger alert-dismissible' role='alert'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button><strong>Error! "+msg.errorMessage+"</strong></div>");
+			}
+		});
+	}
+
+	function deleteEmployee(delEmpl){
+		var data = {idEmployee:delEmpl};
+		var del = confirm('Hapus Data?')
+		if (del==true){
+		$.ajax({
+			async: false,
+			contentType:"application/json; charset=UTF-8",
+			type:"POST",
+			url: "http://localhost:8080/hello/employee-delete.do",
+			data: JSON.stringify(data)
+		}).done(function(msg){
+			console.log(msg.deleteId);
+			$('#employee-row'+msg.deleteId+'').remove();
+		});
+		}
+	}
+
+	$(function() {
+			$("#dateOfBirthString").datepicker({
+				dateFormat : 'yy-mm-dd'
+			}).val();
+		});
+	$(function() {
+			$("#UdateOfBirthString").datepicker({
+				dateFormat : 'yy-mm-dd'
+			}).val();
+		});
+</script>
+</body>
+</html>
